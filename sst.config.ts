@@ -10,7 +10,7 @@ export default $config({
   async run() {
     const healthCheck = new sst.aws.Function("HealthCheck", {
       url: true,
-      handler: "src/lambda.handler",
+      handler: "src/health.handler",
     });
 
     return {
