@@ -12,7 +12,7 @@ You define lambda functions in `src/` folder and APIs in `sst.config.ts` file.
 
 Then run `sst dev` to start local server.
 
-You can deploy to AWS by running `sst deploy`.
+You can deploy to AWS by running `sst deploy`. You can set the stage value to `dev` or `prod` to deploy to different environment.
 
 You can remove the stack by running `sst remove`.
 
