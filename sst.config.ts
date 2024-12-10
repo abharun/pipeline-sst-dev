@@ -3,7 +3,9 @@
 export default $config({
   app(input) {
     return {
-      name: "sst-health-check-ts",
+      name: "sst-demo",
+      removal: input?.stage === "production" ? "retain" : "remove",
+      protect: ["production"].includes(input?.stage),
       home: "aws",
     };
   },
