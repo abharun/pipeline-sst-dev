@@ -8,7 +8,7 @@ You can directly define Lambda functions and it's APIs in SST project and direct
 
 ## How to use
 
-You define lambda functions in `src/` folder and APIs in `sst.config.ts` file.
+You define lambda functions in `src/` folder and APIs in `sst.config.ts` file. Here, the lambda functions can be written in both JS or TS(sst supports it!)
 
 Then run `sst dev` to start local server.
 
