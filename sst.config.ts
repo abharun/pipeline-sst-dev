@@ -10,11 +10,10 @@ export default $config({
     };
   },
   async run() {
-    // First Lambda: Addition function
+
     const addNumbers = new sst.aws.Function("AddNumbers", {
       handler: "src/calc.handler",
     });
-
     const calculateApi = new sst.aws.Function("CalculateApi", {
       url: true,
       handler: "src/calcapi.handler",
@@ -24,11 +23,27 @@ export default $config({
       permissions: [{
         actions: ["lambda:InvokeFunction"],
         resources: [addNumbers.arn],
-      }], 
+      }],
     });
+
+    const mulNumbers = new sst.aws.Function("MultipleNumbers", {
+      handler: "src/mul.handler",
+    });
+    const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
+      url: true,
+      handler: "src/mulapi.handler",
+      environment: {
+        MUL_NUMBER_NAME: mulNumbers.name,
+      },
+      permissions: [{
+        actions: ["lambda:InvokeFunction"],
+        resources: [mulNumbers.arn],
+      }]
+    })
 
     return {
       CalculateApiUrl: calculateApi.url,
+      MultipleApiUrl: mulNumberApi.url,
     };
   },
 });

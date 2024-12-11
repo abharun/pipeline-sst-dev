@@ -15,5 +15,14 @@ declare module "sst" {
       "type": "sst.aws.Function"
       "url": string
     }
+    "MultipleNumberAPI": {
+      "name": string
+      "type": "sst.aws.Function"
+      "url": string
+    }
+    "MultipleNumbers": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
   }
 }
