@@ -5,20 +5,12 @@ const lambda = new Lambda({});
 
 export async function handler(event: APIGatewayProxyEvent) {
     try {
-        console.log("Received event:", JSON.stringify(event, null, 2));
-
         const body = JSON.parse(event.body ?? '{}');
-        const { num1, num2 } = body;
-
-        console.log("Sending eveng:", Buffer.from(JSON.stringify({ num1, num2 })));
-        
-        const payload = JSON.stringify({ num1, num2 });
-        console.log("Sending event:", Buffer.from(payload));
 
         const response = await lambda.send(new InvokeCommand({
             FunctionName: process.env.ADD_FUNCTION_NAME!,
             InvocationType: 'RequestResponse',
-            Payload: Buffer.from(payload),
+            Payload: JSON.stringify(body),
         }));
 
         const result = JSON.parse(new TextDecoder().decode(response.Payload));
@@ -31,7 +23,6 @@ export async function handler(event: APIGatewayProxyEvent) {
             }),
         };
     } catch (error) {
-        console.error('Error:', error); // Add logging for debugging
         return {
             statusCode: 500,
             body: JSON.stringify({ error: 'Internal server error', detail: String(error) }),
