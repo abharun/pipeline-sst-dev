@@ -10,13 +10,25 @@ export default $config({
     };
   },
   async run() {
-    const healthCheck = new sst.aws.Function("HealthCheck", {
+    // First Lambda: Addition function
+    const addNumbers = new sst.aws.Function("AddNumbers", {
+      handler: "src/calc.handler",
+    });
+
+    const calculateApi = new sst.aws.Function("CalculateApi", {
       url: true,
-      handler: "src/health.handler",
+      handler: "src/calcapi.handler",
+      environment: {
+        ADD_FUNCTION_NAME: addNumbers.name,
+      },
+      permissions: [{
+        actions: ["lambda:InvokeFunction"],
+        resources: [addNumbers.arn],
+      }], 
     });
 
     return {
-      HealthCheckUrl: healthCheck.url,
+      CalculateApiUrl: calculateApi.url,
     };
   },
 });

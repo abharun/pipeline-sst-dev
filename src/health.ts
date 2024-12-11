@@ -7,14 +7,14 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "healthy" }),
+        body: JSON.stringify({ status: "Getting Request" }),
       };
     
     case "POST":
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "created" }),
+        body: JSON.stringify({ status: "Creating Request" }),
       };
     
     default:

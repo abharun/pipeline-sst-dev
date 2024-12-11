@@ -6,7 +6,11 @@ import "sst"
 export {}
 declare module "sst" {
   export interface Resource {
-    "HealthCheck": {
+    "AddNumbers": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
+    "CalculateApi": {
       "name": string
       "type": "sst.aws.Function"
       "url": string
