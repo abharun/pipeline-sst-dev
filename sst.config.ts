@@ -1,6 +1,6 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
-import { Calculator } from "./stacks/AddStack";
+import { Additioner } from "./stacks/AddStack";
 import { Multiplier } from "./stacks/MulStack";
 
 export default $config({
@@ -13,11 +13,11 @@ export default $config({
     };
   },
   async run() {
-    const calculator = await Calculator();
+    const additioner = await Additioner();
     const multiplier = await Multiplier();
 
     return {
-      CalculateApiUrl: calculator.url,
+      CalculateApiUrl: additioner.url,
       MultipleApiUrl: multiplier.url,
     };
   },

@@ -6,23 +6,5 @@ import "sst"
 export {}
 declare module "sst" {
   export interface Resource {
-    "AddNumbers": {
-      "name": string
-      "type": "sst.aws.Function"
-    }
-    "AddNumbersApi": {
-      "name": string
-      "type": "sst.aws.Function"
-      "url": string
-    }
-    "MultipleNumberAPI": {
-      "name": string
-      "type": "sst.aws.Function"
-      "url": string
-    }
-    "MultipleNumbers": {
-      "name": string
-      "type": "sst.aws.Function"
-    }
   }
 }

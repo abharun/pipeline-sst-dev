@@ -1,4 +1,4 @@
-export async function Calculator() {
+export async function Additioner() {
     const addNumbers = new sst.aws.Function("AddNumbers", {
         handler: "src/add.handler",
     });
