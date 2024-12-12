@@ -10,7 +10,7 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
-    "CalculateApi": {
+    "AddNumbersApi": {
       "name": string
       "type": "sst.aws.Function"
       "url": string

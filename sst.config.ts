@@ -1,5 +1,8 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+import { Calculator } from "./stacks/AddStack";
+import { Multiplier } from "./stacks/MulStack";
+
 export default $config({
   app(input) {
     return {
@@ -10,40 +13,12 @@ export default $config({
     };
   },
   async run() {
-
-    const addNumbers = new sst.aws.Function("AddNumbers", {
-      handler: "src/calc.handler",
-    });
-    const calculateApi = new sst.aws.Function("CalculateApi", {
-      url: true,
-      handler: "src/calcapi.handler",
-      environment: {
-        ADD_FUNCTION_NAME: addNumbers.name,
-      },
-      permissions: [{
-        actions: ["lambda:InvokeFunction"],
-        resources: [addNumbers.arn],
-      }],
-    });
-
-    const mulNumbers = new sst.aws.Function("MultipleNumbers", {
-      handler: "src/mul.handler",
-    });
-    const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
-      url: true,
-      handler: "src/mulapi.handler",
-      environment: {
-        MUL_NUMBER_NAME: mulNumbers.name,
-      },
-      permissions: [{
-        actions: ["lambda:InvokeFunction"],
-        resources: [mulNumbers.arn],
-      }]
-    })
+    const calculator = await Calculator();
+    const multiplier = await Multiplier();
 
     return {
-      CalculateApiUrl: calculateApi.url,
-      MultipleApiUrl: mulNumberApi.url,
+      CalculateApiUrl: calculator.url,
+      MultipleApiUrl: multiplier.url,
     };
   },
 });
