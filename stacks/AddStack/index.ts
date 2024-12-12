@@ -5,7 +5,6 @@ export async function Additioner(api: sst.aws.ApiGatewayV2) {
     });
 
     const addNumberApi = new sst.aws.Function("AddNumbersApi", {
-        url: true,
         handler: "stacks/AddStack/src/addapi.handler",
         environment: {
             ADD_FUNCTION_NAME: addNumbers.name,

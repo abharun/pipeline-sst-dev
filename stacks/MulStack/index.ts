@@ -4,7 +4,6 @@ export async function Multiplier(apiGW: sst.aws.ApiGatewayV2) {
     });
 
     const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
-        url: true,
         handler: "stacks/MulStack/src/mulapi.handler",
         environment: {
             MUL_NUMBER_NAME: mulNumbers.name,

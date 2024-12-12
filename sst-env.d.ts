@@ -13,12 +13,10 @@ declare module "sst" {
     "AddNumbersApi": {
       "name": string
       "type": "sst.aws.Function"
-      "url": string
     }
     "MultipleNumberAPI": {
       "name": string
       "type": "sst.aws.Function"
-      "url": string
     }
     "MultipleNumbers": {
       "name": string
