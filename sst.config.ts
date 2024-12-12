@@ -13,11 +13,21 @@ export default $config({
     };
   },
   async run() {
-    const additioner = await Additioner();
-    const multiplier = await Multiplier();
+    const api = new sst.aws.ApiGatewayV2("TestGateway", {
+      domain: {
+        name: "test.bminted.io",  
+      },
+      cors: {
+        allowOrigins: ["*"],
+        allowMethods: ["*"],
+      }
+    })
+
+    const additioner = await Additioner(api);
+    const multiplier = await Multiplier(api);
 
     return {
-      CalculateApiUrl: additioner.url,
+      AdditionerApiUrl: additioner.url,
       MultipleApiUrl: multiplier.url,
     };
   },

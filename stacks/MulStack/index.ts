@@ -1,4 +1,4 @@
-export async function Multiplier() {
+export async function Multiplier(apiGW: sst.aws.ApiGatewayV2) {
     const mulNumbers = new sst.aws.Function("MultipleNumbers", {
         handler: "stacks/MulStack/src/mul.handler",
     });
@@ -15,7 +15,9 @@ export async function Multiplier() {
         }]
     });
 
+    apiGW.route("POST /calc/mul", mulNumberApi.arn);
+
     return {
-        url: mulNumberApi.url
+        url: apiGW.url
     };
 }

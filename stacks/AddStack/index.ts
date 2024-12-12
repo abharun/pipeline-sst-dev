@@ -1,12 +1,10 @@
-import { join } from "path";
-
-export async function Additioner() {
+export async function Additioner(api: sst.aws.ApiGatewayV2) {
     const addNumbers = new sst.aws.Function("AddNumbers", {
         handler: "stacks/AddStack/src/add.handler",
         nodejs: {}
     });
 
-    const calculateApi = new sst.aws.Function("AddNumbersApi", {
+    const addNumberApi = new sst.aws.Function("AddNumbersApi", {
         url: true,
         handler: "stacks/AddStack/src/addapi.handler",
         environment: {
@@ -18,7 +16,9 @@ export async function Additioner() {
         }],
     });
 
+    api.route("POST /calc/add", addNumberApi.arn);
+
     return {
-        url: calculateApi.url
+        url: api.url
     };
 }

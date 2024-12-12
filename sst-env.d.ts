@@ -24,5 +24,9 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
+    "TestGateway": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
   }
 }
