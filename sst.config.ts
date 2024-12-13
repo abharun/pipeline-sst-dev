@@ -1,7 +1,7 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
-import { Additioner } from "./stacks/AddStack";
-import { Multiplier } from "./stacks/MulStack";
+import { Additioner } from "./stacks/addStack";
+import { Multiplier } from "./stacks/mulStack";
 
 export default $config({
   app(input) {
