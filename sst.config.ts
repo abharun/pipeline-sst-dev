@@ -2,6 +2,7 @@
 
 import { Additioner } from "./stacks/addStack";
 import { Multiplier } from "./stacks/mulStack";
+import { SharedLayerStack } from "./stacks/sharedLayer";
 
 export default $config({
   app(input) {
@@ -15,13 +16,15 @@ export default $config({
   async run() {
     const api = new sst.aws.ApiGatewayV2("TestGateway", {
       domain: {
-        name: "test.bminted.io",  
+        name: "test.bminted.io",
       },
       cors: {
         allowOrigins: ["*"],
         allowMethods: ["*"],
       }
-    })
+    });
+
+    const sharedLayer = new SharedLayerStack(this, "sharedLayer");
 
     const additioner = await Additioner(api);
     const multiplier = await Multiplier(api);

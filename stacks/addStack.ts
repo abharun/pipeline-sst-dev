@@ -1,3 +1,6 @@
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as cdklib from "aws-cdk-lib";
+
 export async function Additioner(api: sst.aws.ApiGatewayV2) {
     const addNumbers = new sst.aws.Function("AddNumbers", {
         handler: "core/addition/add.handler",
