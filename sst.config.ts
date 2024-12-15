@@ -24,7 +24,7 @@ export default $config({
     });
 
     new AdditionStack(this, "addStack", { api });
-    new AdditionStack(this, "mulStack", { api });
+    new MultiplierStack(this, "mulStack", { api });
 
     return {
       domain: "test.bminted.io"
