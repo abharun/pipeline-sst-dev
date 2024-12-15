@@ -1,22 +1,37 @@
-export async function Multiplier(apiGW: sst.aws.ApiGatewayV2) {
-    const mulNumbers = new sst.aws.Function("MultipleNumbers", {
-        handler: "core/multiple/mul.handler",
-    });
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
 
-    const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
-        handler: "core/multiple/mulapi.handler",
-        environment: {
-            MUL_NUMBER_NAME: mulNumbers.name,
-        },
-        permissions: [{
-            actions: ["lambda:InvokeFunction"],
-            resources: [mulNumbers.arn],
-        }]
-    });
+interface MultiplierStackProps extends cdk.StackProps {
+    api: sst.aws.ApiGatewayV2,
+}
 
-    apiGW.route("POST /calc/mul", mulNumberApi.arn);
+export class MultiplierStack extends cdk.Stack {
+    constructor(scope: Construct, id: string, props: MultiplierStackProps) {
+        super(scope, id, props);
 
-    return {
-        url: apiGW.url
-    };
+        const { api } = props;
+
+        const mulNumbers = new sst.aws.Function("MultipleNumbers", {
+            handler: "core/multiple/mul.handler",
+        });
+    
+        const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
+            handler: "core/multiple/mulapi.handler",
+            environment: {
+                MUL_NUMBER_NAME: mulNumbers.name,
+            },
+            permissions: [{
+                actions: ["lambda:InvokeFunction"],
+                resources: [mulNumbers.arn],
+            }]
+        });
+
+        api.route("POST /calc/add", mulNumberApi.arn);
+
+        new cdk.CfnOutput(this, "MultiplierApiUrl", {
+            value: api.url.toString(),
+            description: "The URL of the multiplier api",
+        });
+    }
 }

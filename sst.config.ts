@@ -1,8 +1,7 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
-import { Additioner } from "./stacks/addStack";
-import { Multiplier } from "./stacks/mulStack";
-import { SharedLayerStack } from "./stacks/sharedLayer";
+import { AdditionStack } from "./stacks/addStack";
+import { MultiplierStack } from "./stacks/mulStack";
 
 export default $config({
   app(input) {
@@ -24,14 +23,11 @@ export default $config({
       }
     });
 
-    const sharedLayer = new SharedLayerStack(this, "sharedLayer");
-
-    const additioner = await Additioner(api);
-    const multiplier = await Multiplier(api);
+    new AdditionStack(this, "addStack", { api });
+    new AdditionStack(this, "mulStack", { api });
 
     return {
-      AdditionerApiUrl: additioner.url,
-      MultipleApiUrl: multiplier.url,
+      domain: "test.bminted.io"
     };
   },
 });

@@ -1,26 +1,38 @@
 import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as cdklib from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
 
-export async function Additioner(api: sst.aws.ApiGatewayV2) {
-    const addNumbers = new sst.aws.Function("AddNumbers", {
-        handler: "core/addition/add.handler",
-        nodejs: {}
-    });
+interface AdditionStackProps extends cdk.StackProps {
+    api: sst.aws.ApiGatewayV2,
+}
 
-    const addNumberApi = new sst.aws.Function("AddNumbersApi", {
-        handler: "core/addition/addapi.handler",
-        environment: {
-            ADD_FUNCTION_NAME: addNumbers.name,
-        },
-        permissions: [{
-            actions: ["lambda:InvokeFunction"],
-            resources: [addNumbers.arn],
-        }],
-    });
+export class AdditionStack extends cdk.Stack {
+    constructor(scope: Construct, id: string, props: AdditionStackProps) {
+        super(scope, id, props);
 
-    api.route("POST /calc/add", addNumberApi.arn);
+        const { api } = props;
 
-    return {
-        url: api.url
-    };
+        const addNumbers = new sst.aws.Function("AddNumbers", {
+            handler: "core/addition/add.handler",
+            nodejs: {}
+        });
+
+        const addNumberApi = new sst.aws.Function("AddNumbersApi", {
+            handler: "core/addition/addapi.handler",
+            environment: {
+                ADD_FUNCTION_NAME: addNumbers.name,
+            },
+            permissions: [{
+                actions: ["lambda:InvokeFunction"],
+                resources: [addNumbers.arn],
+            }],
+        });
+
+        api.route("POST /calc/add", addNumberApi.arn);
+
+        new cdk.CfnOutput(this, "AdditionApiUrl", {
+            value: api.url.toString(),
+            description: "The URL of the additioner api",
+        });
+    }
 }
