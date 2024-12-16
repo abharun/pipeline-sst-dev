@@ -1,4 +1,4 @@
-import { Auctions } from "../../shared/node.js";
+import { Auctions } from "../../shared/nodejs";
 
 export const handler = async (event) => {
     try {

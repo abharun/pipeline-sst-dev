@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { Auctions } from '../../shared/node.js';
+import { Auctions } from '../../shared/nodejs';
 
 export async function handler(event: APIGatewayProxyEvent) {
     try {

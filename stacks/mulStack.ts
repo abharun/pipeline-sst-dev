@@ -28,10 +28,5 @@ export class MultiplierStack extends cdk.Stack {
         });
 
         api.route("POST /calc/mul", mulNumberApi.arn);
-
-        new cdk.CfnOutput(this, "MultiplierApiUrl", {
-            value: api.url.toString(),
-            description: "The URL of the multiplier api",
-        });
     }
 }

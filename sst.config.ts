@@ -2,6 +2,8 @@
 
 import { AdditionStack } from "./stacks/addStack";
 import { MultiplierStack } from "./stacks/mulStack";
+import { SharedLayerStack } from "./stacks/sharedLayer";
+import { HealthCheckStack } from "./stacks/healthStack";
 
 export default $config({
   app(input) {
@@ -23,11 +25,15 @@ export default $config({
       }
     });
 
+    new HealthCheckStack(this, "healthStack", { api });
+
+    new SharedLayerStack(this, "shareLayerStack");
+
     new AdditionStack(this, "addStack", { api });
     new MultiplierStack(this, "mulStack", { api });
 
     return {
-      domain: "test.bminted.io"
+      domain: api.url
     };
   },
 });

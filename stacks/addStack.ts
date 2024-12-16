@@ -29,10 +29,5 @@ export class AdditionStack extends cdk.Stack {
         });
 
         api.route("POST /calc/add", addNumberApi.arn);
-
-        new cdk.CfnOutput(this, "AdditionApiUrl", {
-            value: api.url.toString(),
-            description: "The URL of the additioner api",
-        });
     }
 }

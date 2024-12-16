@@ -7,8 +7,8 @@ export class SharedLayerStack extends cdk.Stack {
         super(scope, id, props);
 
         const sharedLayer = new lambda.LayerVersion(this, "shared-layer", {
-            code: lambda.Code.fromAsset("shared/node.js"),
-            compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
+            code: lambda.Code.fromAsset("shared/nodejs"),
+            compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
             description: "Shared layer for lambda functions",
         });
 
