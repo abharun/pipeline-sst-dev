@@ -14,6 +14,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
+    "HealthCheckApi": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
     "MultipleNumberAPI": {
       "name": string
       "type": "sst.aws.Function"

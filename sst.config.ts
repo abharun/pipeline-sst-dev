@@ -1,7 +1,9 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
-import { Additioner } from "./stacks/addStack";
-import { Multiplier } from "./stacks/mulStack";
+import { AdditionStack } from "./stacks/addStack";
+import { MultiplierStack } from "./stacks/mulStack";
+import { SharedLayerStack } from "./stacks/sharedLayer";
+import { HealthCheckStack } from "./stacks/healthStack";
 
 export default $config({
   app(input) {
@@ -15,20 +17,23 @@ export default $config({
   async run() {
     const api = new sst.aws.ApiGatewayV2("TestGateway", {
       domain: {
-        name: "test.bminted.io",  
+        name: "test.bminted.io",
       },
       cors: {
         allowOrigins: ["*"],
         allowMethods: ["*"],
       }
-    })
+    });
 
-    const additioner = await Additioner(api);
-    const multiplier = await Multiplier(api);
+    new HealthCheckStack(this, "healthStack", { api });
+
+    new SharedLayerStack(this, "shareLayerStack");
+
+    new AdditionStack(this, "addStack", { api });
+    new MultiplierStack(this, "mulStack", { api });
 
     return {
-      AdditionerApiUrl: additioner.url,
-      MultipleApiUrl: multiplier.url,
+      domain: api.url
     };
   },
 });
