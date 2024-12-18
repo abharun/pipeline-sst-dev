@@ -1,5 +1,5 @@
 export const Auctions = {
-    getMax: (values: number[]): number => {
+    getMax: (values) => {
         if (values.length === 0) {
             throw new Error("The values array cannot be empty.");
         }

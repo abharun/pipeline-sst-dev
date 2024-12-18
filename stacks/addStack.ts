@@ -14,7 +14,8 @@ export class AdditionStack extends cdk.Stack {
 
         const addNumbers = new sst.aws.Function("AddNumbers", {
             handler: "core/addition/add.handler",
-            nodejs: {}
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
+            runtime: "nodejs20.x"
         });
 
         const addNumberApi = new sst.aws.Function("AddNumbersApi", {
@@ -26,6 +27,8 @@ export class AdditionStack extends cdk.Stack {
                 actions: ["lambda:InvokeFunction"],
                 resources: [addNumbers.arn],
             }],
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
+            runtime: "nodejs20.x",
         });
 
         api.route("POST /calc/add", addNumberApi.arn);
