@@ -1,4 +1,3 @@
-import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 
@@ -13,18 +12,20 @@ export class MultiplierStack extends cdk.Stack {
         const { api } = props;
 
         const mulNumbers = new sst.aws.Function("MultipleNumbers", {
-            handler: "core/multiple/mul.handler",
+            handler: "core/mul/index.handler",
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
         });
     
         const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
-            handler: "core/multiple/mulapi.handler",
+            handler: "core/mulapi/index.handler",
             environment: {
                 MUL_NUMBER_NAME: mulNumbers.name,
             },
             permissions: [{
                 actions: ["lambda:InvokeFunction"],
                 resources: [mulNumbers.arn],
-            }]
+            }],
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
         });
 
         api.route("POST /calc/mul", mulNumberApi.arn);
