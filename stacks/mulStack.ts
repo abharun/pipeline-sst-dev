@@ -12,12 +12,12 @@ export class MultiplierStack extends cdk.Stack {
         const { api } = props;
 
         const mulNumbers = new sst.aws.Function("MultipleNumbers", {
-            handler: "core/multiple/mul.handler",
-            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
+            handler: "core/mul/index.handler",
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
         });
     
         const mulNumberApi = new sst.aws.Function("MultipleNumberAPI", {
-            handler: "core/multiple/mulapi.handler",
+            handler: "core/mulapi/index.handler",
             environment: {
                 MUL_NUMBER_NAME: mulNumbers.name,
             },
@@ -25,7 +25,7 @@ export class MultiplierStack extends cdk.Stack {
                 actions: ["lambda:InvokeFunction"],
                 resources: [mulNumbers.arn],
             }],
-            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
         });
 
         api.route("POST /calc/mul", mulNumberApi.arn);

@@ -13,13 +13,13 @@ export class AdditionStack extends cdk.Stack {
         const { api } = props;
 
         const addNumbers = new sst.aws.Function("AddNumbers", {
-            handler: "core/addition/add.handler",
-            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
-            runtime: "nodejs20.x"
+            handler: "core/add/index.handler",
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
+            runtime: "nodejs20.x",
         });
 
         const addNumberApi = new sst.aws.Function("AddNumbersApi", {
-            handler: "core/addition/addapi.handler",
+            handler: "core/addapi/index.handler",
             environment: {
                 ADD_FUNCTION_NAME: addNumbers.name,
             },
@@ -27,7 +27,7 @@ export class AdditionStack extends cdk.Stack {
                 actions: ["lambda:InvokeFunction"],
                 resources: [addNumbers.arn],
             }],
-            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:4"],
+            layers: ["arn:aws:lambda:eu-west-1:500692200765:layer:mysharedlayer:5"],
             runtime: "nodejs20.x",
         });
 
