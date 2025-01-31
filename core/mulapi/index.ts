@@ -1,8 +1,9 @@
-const { Lambda, InvokeCommand } = require('@aws-sdk/client-lambda');
+import { Lambda, InvokeCommand } from '@aws-sdk/client-lambda';
+import { APIGatewayProxyEvent } from 'aws-lambda';
 
 const lambda = new Lambda({});
 
-export const handler = async (event) => {
+export const handler = async (event: APIGatewayProxyEvent) => {
     try {
         const body = JSON.parse(event.body);
 

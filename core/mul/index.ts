@@ -1,6 +1,7 @@
-const Auctions = require('/opt/nodejs/auction');
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import MathFunc from "/opt/nodejs/utils";
 
-export const handler = async (event) => {
+export const handler = async (event: APIGatewayProxyEvent) => {
     try {
         const body = JSON.parse(JSON.stringify(event, null, 2));
 
@@ -9,7 +10,7 @@ export const handler = async (event) => {
         if (typeof body.num1 !== 'number' || typeof body.num2 !== 'number') {
             throw new Error('Both inputs must be numbers');
         }
-        const result = body.num1 * body.num2 * Auctions.getMax([body.num1, body.num2]);
+        const result = body.num1 * body.num2 * MathFunc.getMax([body.num1, body.num2]);
         return { result };
     } catch (error) {
         console.log("What is issue:", error);
